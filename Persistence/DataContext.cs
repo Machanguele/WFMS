@@ -21,5 +21,11 @@ namespace Persistence
         public DbSet<UserCrudAction> UserCrudActions { get; set; }
         public DbSet<UserInformationUpdate> UserInformationUpdates { get; set; }
         public DbSet<EcosystemInformationUpdate> EcosystemInformationUpdates { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectStatus> ProjectStatus { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<ActivityStatus> ActivityStatuses { get; set; }
+        public DbSet<ActivityType> ActivityTypes { get; set; }
+        
     }
 }

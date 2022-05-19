@@ -18,10 +18,37 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Features\Activities\Commands\Handlers" />
+      <Folder Include="Features\Activities\Commands\Validators" />
+      <Folder Include="Features\Activities\Queries\Handlers" />
+      <Folder Include="Features\Activities\Queries\RequestModel" />
+      <Folder Include="Features\Activities\Queries\Validators" />
+      <Folder Include="Features\ActivityStatus\Commands\Handlers" />
+      <Folder Include="Features\ActivityStatus\Commands\RequestModel" />
+      <Folder Include="Features\ActivityStatus\Commands\Validators" />
+      <Folder Include="Features\ActivityStatus\Queries\Handlers" />
+      <Folder Include="Features\ActivityStatus\Queries\RequestModel" />
+      <Folder Include="Features\ActivityStatus\Queries\Validators" />
+      <Folder Include="Features\ActivityTypes\Commands\Handlers" />
+      <Folder Include="Features\ActivityTypes\Commands\RequestModel" />
+      <Folder Include="Features\ActivityTypes\Commands\Validators" />
+      <Folder Include="Features\ActivityTypes\Queries\Handlers" />
+      <Folder Include="Features\ActivityTypes\Queries\RequestModel" />
+      <Folder Include="Features\ActivityTypes\Queries\Validators" />
       <Folder Include="Features\Auth\Queries\Handlers" />
       <Folder Include="Features\Auth\Queries\RequestModels" />
       <Folder Include="Features\Auth\Queries\Validators" />
       <Folder Include="Features\EcoSystems\Queries\Validators" />
+      <Folder Include="Features\ProjectStatus\Commands\Handlers" />
+      <Folder Include="Features\ProjectStatus\Commands\RequestModel" />
+      <Folder Include="Features\ProjectStatus\Commands\Validators" />
+      <Folder Include="Features\ProjectStatus\Queries\Handlers" />
+      <Folder Include="Features\ProjectStatus\Queries\RequestModel" />
+      <Folder Include="Features\ProjectStatus\Queries\Validators" />
+      <Folder Include="Features\Projects\Commands\Handlers" />
+      <Folder Include="Features\Projects\Commands\Validators" />
+      <Folder Include="Features\Projects\Queries\Handlers" />
+      <Folder Include="Features\Projects\Queries\Validators" />
       <Folder Include="Features\Users\Queries" />
     </ItemGroup>
 
