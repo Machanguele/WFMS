@@ -1,0 +1,11 @@
+﻿[
+  {
+    "Name": "SystemAdministrator",
+    "Description": "System Administrator"
+  },
+  {
+    "Name": "OperationsManager",
+    "Description": "Operations Manager"
+  }
+  
+]

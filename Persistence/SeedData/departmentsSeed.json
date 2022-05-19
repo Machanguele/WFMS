@@ -1,0 +1,22 @@
+﻿[
+  {
+    "ShortName": "DEEL",
+    "Description": "Departamento de Engenharia Eletrotécnica "
+  },
+  {
+    "ShortName": "DEQUI",
+    "Description": "Departamento de Engenharia Química "
+  },
+  {
+    "ShortName": "DEMA",
+    "Description": "Departamento de Engenharia Mecânica "
+  },
+  {
+    "ShortName": "DECI",
+    "Description": "Departamento de Engenharia DECI"
+  },
+  {
+    "ShortName": "DRA",
+    "Description": "Departamento do Registo Académico"
+  }
+]

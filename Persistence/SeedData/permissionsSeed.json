@@ -1,0 +1,45 @@
+﻿[
+
+  {
+    "Name": "CreateRole",
+    "Description": "Create Role"
+  },
+  {
+    "Name": "ListRoles",
+    "Description": "List Roles"
+  },
+  {
+    "Name": "EditRole",
+    "Description": "Edit Role"
+  },
+  {
+    "Name": "DeleteRole",
+    "Description": "Edit Role"
+  },
+  {
+    "Name": "CreateSystem",
+    "Description": "Create System"
+  },
+  {
+    "Name": "ListSystems",
+    "Description": "List Systems"
+  },
+  {
+    "Name": "EditSystem",
+    "Description": "Edit System"
+  },
+  {
+    "Name": "DeleteSystem",
+    "Description": "Delete System"
+  },
+  {
+    "Name": "UpdateUser",
+    "Description": "Update Tender User"
+  },
+  {
+    "Name": "CRUDUser",
+    "Description": "Create, Read, Update and Delete User"
+  }
+
+]
+

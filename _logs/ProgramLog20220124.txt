@@ -1,0 +1,2 @@
+1/24/2022 8:11:35 AM - Status Code: 500 - An error occurred during creating data from seeds - Details: There is already an object named 'AspNetRoles' in the database.
+
