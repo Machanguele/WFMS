@@ -45,8 +45,6 @@
       <Folder Include="Features\ProjectStatus\Queries\Handlers" />
       <Folder Include="Features\ProjectStatus\Queries\RequestModel" />
       <Folder Include="Features\ProjectStatus\Queries\Validators" />
-      <Folder Include="Features\Projects\Commands\Handlers" />
-      <Folder Include="Features\Projects\Commands\Validators" />
       <Folder Include="Features\Projects\Queries\Handlers" />
       <Folder Include="Features\Projects\Queries\Validators" />
       <Folder Include="Features\Users\Queries" />
