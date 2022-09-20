@@ -93,8 +93,8 @@ namespace API
             /*Console.WriteLine($"{_hostEnvironment.WebRootPath}/Resources");*/
             services.AddLocalization();
             services.AddSwaggerDocumentation();
-            services.AddHostedService<InvalidateRefreshTokenWorker>();
-            services.AddHostedService<UpdateSystemUsersWorker>();
+            //services.AddHostedService<InvalidateRefreshTokenWorker>();
+            //services.AddHostedService<UpdateSystemUsersWorker>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

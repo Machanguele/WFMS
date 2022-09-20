@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220918121440_Componentes")]
+    partial class Componentes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,9 +261,6 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("ActualEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ComponentStatusId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(450)");
 
@@ -285,31 +284,11 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComponentStatusId");
-
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Components");
-                });
-
-            modelBuilder.Entity("Domain.ComponentStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ComponentStatus");
                 });
 
             modelBuilder.Entity("Domain.Department", b =>
@@ -379,6 +358,24 @@ namespace Persistence.Migrations
                     b.HasIndex("UserCrudActionId");
 
                     b.ToTable("EcosystemInformationUpdates");
+                });
+
+            modelBuilder.Entity("Domain.ProjectStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectStatus");
                 });
 
             modelBuilder.Entity("Domain.RefreshToken", b =>
@@ -701,10 +698,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Component", b =>
                 {
-                    b.HasOne("Domain.ComponentStatus", "ComponentStatus")
-                        .WithMany()
-                        .HasForeignKey("ComponentStatusId");
-
                     b.HasOne("Domain.AppUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById");
@@ -712,8 +705,6 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentId");
-
-                    b.Navigation("ComponentStatus");
 
                     b.Navigation("CreatedBy");
 

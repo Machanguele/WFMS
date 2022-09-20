@@ -12,17 +12,16 @@
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="10.1.1" />
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+      <PackageReference Include="DocumentFormat.OpenXml" Version="2.18.0" />
+      <PackageReference Include="EPPlus" Version="6.0.7" />
+      <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+      <PackageReference Include="ExcelPackage" Version="1.0.0" />
       <PackageReference Include="FluentValidation.AspNetCore" Version="10.0.4" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
       <PackageReference Include="Twilio" Version="5.60.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Activities\Commands\Handlers" />
-      <Folder Include="Features\Activities\Commands\Validators" />
-      <Folder Include="Features\Activities\Queries\Handlers" />
-      <Folder Include="Features\Activities\Queries\RequestModel" />
-      <Folder Include="Features\Activities\Queries\Validators" />
       <Folder Include="Features\ActivityStatus\Commands\Handlers" />
       <Folder Include="Features\ActivityStatus\Commands\RequestModel" />
       <Folder Include="Features\ActivityStatus\Commands\Validators" />
@@ -39,14 +38,7 @@
       <Folder Include="Features\Auth\Queries\RequestModels" />
       <Folder Include="Features\Auth\Queries\Validators" />
       <Folder Include="Features\EcoSystems\Queries\Validators" />
-      <Folder Include="Features\ProjectStatus\Commands\Handlers" />
-      <Folder Include="Features\ProjectStatus\Commands\RequestModel" />
-      <Folder Include="Features\ProjectStatus\Commands\Validators" />
-      <Folder Include="Features\ProjectStatus\Queries\Handlers" />
-      <Folder Include="Features\ProjectStatus\Queries\RequestModel" />
-      <Folder Include="Features\ProjectStatus\Queries\Validators" />
-      <Folder Include="Features\Projects\Queries\Handlers" />
-      <Folder Include="Features\Projects\Queries\Validators" />
+      <Folder Include="Features\ProjectStatus" />
       <Folder Include="Features\Users\Queries" />
     </ItemGroup>
 

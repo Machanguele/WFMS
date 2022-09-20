@@ -2,10 +2,10 @@
 
 namespace Application.Specifications
 {
-    public class ProjectSpecification : SpecificationBase<Project>
+    public class ComponentSpecification : SpecificationBase<Component>
     {
         //: base(x=>x.Description.ToLower() == description.ToLower() || x.Url.ToLower() == url.ToLower())
-        public ProjectSpecification(string projectName): base(x=>x.Name.ToLower() == projectName.ToLower())
+        public ComponentSpecification(string projectName): base(x=>x.Title.ToLower() == projectName.ToLower())
         {
             
         }

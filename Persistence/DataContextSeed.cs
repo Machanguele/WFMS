@@ -90,6 +90,33 @@ namespace Persistence
 
                     await context.SaveChangesAsync();
                 }
+                
+                if (!context.ComponentStatus.Any())
+                {
+                    var componentsStatusData = File.ReadAllText("../Persistence/SeedData/componentStatusesSeed.json");
+                    var componentStatuses = JsonSerializer.Deserialize<List<ComponentStatus>>(componentsStatusData);
+                    if (componentStatuses != null)
+                        foreach (var cStatus in componentStatuses)
+                        {
+                            await context.AddAsync(cStatus);
+                        }
+
+                    await context.SaveChangesAsync();
+                }
+                
+                if (!context.ActivityStatuses.Any())
+                {
+                    var activityStatusData = File.ReadAllText("../Persistence/SeedData/activityStatusesSeed.json");
+                    var activityStatuses = JsonSerializer.Deserialize<List<ActivityStatus>>(activityStatusData);
+                    if (activityStatuses != null)
+                        foreach (var aStatus in activityStatuses)
+                        {
+                            await context.AddAsync(aStatus);
+                        }
+
+                    await context.SaveChangesAsync();
+                }
+                
             }
             catch (Exception ex)
             {

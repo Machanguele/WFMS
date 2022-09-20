@@ -1,0 +1,18 @@
+﻿[
+  {
+    "Name": "Por iniciar",
+    "Description": "Por iniciar"
+  },
+  {
+    "Name": "Em andamento",
+    "Description": "Em anadamento"
+  },
+  {
+    "Name": "Em revisão",
+    "Description": "Em revisão"
+  },
+  {
+    "Name": "Concluido",
+    "Description": "Concluido"
+  }
+]

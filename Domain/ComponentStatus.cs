@@ -1,6 +1,6 @@
 ﻿namespace Domain
 {
-    public class ProjectStatus : SetUpEntity
+    public class ComponentStatus : SetUpEntity
     {
         public string Description { get; set; }
     }
