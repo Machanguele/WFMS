@@ -1,18 +1,22 @@
 ﻿[
   {
     "Name": "Por fazer",
-    "Description": "Por iniciar"
+    "Description": "Por iniciar",
+    "Progress": 0
   },
   {
     "Name": "Em andamento",
-    "Description": "Em anadamento"
+    "Description": "Em anadamento",
+    "Progress": 25
+  },
+  {
+    "Name": "Em Revisão",
+    "Description": "Em Revisão",
+    "Progress": 75
   },
   {
     "Name": "Concluido",
-    "Description": "Concluido"
-  },
-  {
-    "Name": "Cancelado",
-    "Description": "Cancelado"
+    "Description": "Concluido",
+    "Progress": 100
   }
 ]

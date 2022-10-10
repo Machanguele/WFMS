@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Persistence;
-
-using Application.Features.Activities;
 using Application.Interfaces;
 using Domain;
 using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
+using Persistence;
 
-namespace Application.Features.Users.Commands.Handlers
+namespace Application.Features.Activities
 {
     public class LoudActivitiesFromFile
     {
@@ -25,7 +23,9 @@ namespace Application.Features.Users.Commands.Handlers
         {
             public string Name { get; set; }
             public string Description { get; set; }
-            public int ActivityTypeId { get; set; }
+            public DateTime ExpectedStarAt { get; set; }
+            public DateTime ExpectedEndAt { get; set; }
+            
         }
         public class LoudActivitiesFromFileCommand : IRequest<string>
         {
@@ -43,6 +43,7 @@ namespace Application.Features.Users.Commands.Handlers
             public LoudActivitiesFromFileCommandValidator()
             {
                 RuleFor(x => x.File).NotEmpty();
+                RuleFor(x => x.ComponentId).NotEmpty();
                 RuleFor(x => x.ComponentId).NotEmpty();
             }
         }
@@ -67,9 +68,7 @@ namespace Application.Features.Users.Commands.Handlers
                     throw new WebException("Status not found", 
                         (WebExceptionStatus) HttpStatusCode.NotFound);
                 var component = await _context.Components.FirstOrDefaultAsync(x => x.Id == request.ComponentId);
-                if(component == null)
-                    throw new WebException("Status not found", 
-                        (WebExceptionStatus) HttpStatusCode.NotFound);
+               
 
                 var createdBy = await _userManager.Users.FirstOrDefaultAsync(x =>
                     x.Email == _userAccessor.GetCurrentUserEmail(), cancellationToken: cancellationToken);
@@ -79,9 +78,31 @@ namespace Application.Features.Users.Commands.Handlers
 
                 foreach (var item in data)
                 {
-                    var activityExists = await _context.Activities.FirstOrDefaultAsync(x => x.Name.Equals(item.Name)) == null;
-                    if (!activityExists)
+                    var activityExists = await _context.Activities
+                        .Include(x=>x.Component)
+                        .FirstOrDefaultAsync(x => x.Name.Equals(item.Name) && x.Component.Id == request.ComponentId,
+                            cancellationToken: cancellationToken);
+                    if (activityExists == null)
                     {
+                        if(component == null)
+                            throw new WebException("Status not found", 
+                                (WebExceptionStatus) HttpStatusCode.NotFound);
+                
+                        if (item.ExpectedEndAt < item.ExpectedStarAt)
+                        {
+                            throw new WebException("A data esperada de termino deve ser maior ou igual que a data esperada de inicio", 
+                                (WebExceptionStatus) HttpStatusCode.NotFound);
+                        }
+                        if (item.ExpectedStarAt < component.ExpectedStartDate || item.ExpectedStarAt > component.ExpectedEndDate)
+                        {
+                            throw new WebException("A data esperada nao deve estar fora do escopo do componente", 
+                                (WebExceptionStatus) HttpStatusCode.NotFound);
+                        }
+                        if (item.ExpectedEndAt  < component.ExpectedStartDate || item.ExpectedEndAt >component.ExpectedEndDate)
+                        {
+                            throw new WebException("A data esperada nao deve estar fora do escopo do componente", 
+                                (WebExceptionStatus) HttpStatusCode.NotFound);
+                        }
                         var activity = new Activity()
                         {
                             Name = item.Name,
@@ -89,10 +110,12 @@ namespace Application.Features.Users.Commands.Handlers
                             Status = status,
                             Component = component,
                             CreatedBy = createdBy,
+                            ExpectedEndAt = item.ExpectedEndAt,
+                            ExpectedStarAt = item.ExpectedStarAt
                         };
                         await _context.AddAsync(activity);
+                    }
                 }
-            }
                 
                 if (await _context.SaveChangesAsync(cancellationToken) > 0) return "Criado com Sucesso";
 
@@ -126,10 +149,15 @@ namespace Application.Features.Users.Commands.Handlers
                 
                 for (int row = 2; row<= rowCount; row++)
                 {
+                    /*if(worksheet.Cells.Any(c => string.IsNullOrEmpty(c.Text))) {
+                        break;
+                    }*/
                     var activity = new ActivitiesAdapter()
                     {
-                        Name = worksheet.Cells[row, 1].Value.ToString(),
-                        Description = worksheet.Cells[row, 2].Value.ToString()
+                        Name = worksheet.Cells[row, 1].Value?.ToString(),
+                        Description = worksheet.Cells[row, 2].Value?.ToString(),
+                        ExpectedStarAt = (DateTime) worksheet.Cells[row, 3]?.Value!,
+                        ExpectedEndAt = (DateTime) worksheet.Cells[row, 4]?.Value!
                     };
                     
                     result.Add(activity);

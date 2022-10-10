@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Dtos;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ namespace Application.Features.Activities
 {
     public class ListActivitiesByComponent
     {
-        public class ListActivitiesByComponentQuery : IRequest<List<Activity>>
+        public class ListActivitiesByComponentQuery : IRequest<List<ActivitiesbyStatusDto>>
         {
             public ListActivitiesByComponentQuery(int id)
             {
@@ -19,7 +20,7 @@ namespace Application.Features.Activities
             }
             public int ComponentId { get; set; }
         }
-        public class ListActivitiesByComponentQueryHandler : IRequestHandler<ListActivitiesByComponentQuery, List<Activity>>
+        public class ListActivitiesByComponentQueryHandler : IRequestHandler<ListActivitiesByComponentQuery, List<ActivitiesbyStatusDto>>
         {
             public DataContext Context { get; }
 
@@ -27,12 +28,43 @@ namespace Application.Features.Activities
             {
                 Context = context;
             }
-            public async Task<List<Activity>> Handle(ListActivitiesByComponentQuery request, CancellationToken cancellationToken)
+            public async Task<List<ActivitiesbyStatusDto>> Handle(ListActivitiesByComponentQuery request, CancellationToken cancellationToken)
             {
-                return await Context.Activities
+                var activities =  await Context.Activities
                     .Include(x=>x.Component)
+                    .Include(x=>x.Status)
                     .Where(x=>x.Component.Id== request.ComponentId)
                     .ToListAsync();
+
+                var statuses = await Context.ActivityStatuses.ToListAsync(cancellationToken: cancellationToken);
+                var listToReturn = new List<ActivitiesbyStatusDto>();
+                foreach (var status in statuses)
+                {
+                    var auxActivities = activities.Where(x => x.Status.Id == status.Id).ToList();
+                    var statusActivities = new List<ActivitiesDto>();
+                    foreach (var item in auxActivities)
+                    {
+                        statusActivities.Add(new ActivitiesDto()
+                        {
+                            Description = item.Description,
+                            Name = item.Name,
+                            Id = item.Id,
+                            Status = item.Status,
+                            AllocatedTo = item.AllocatedTo?.FullName,
+                            CreatedAt = item.CreatedAt.ToShortDateString(),
+                            StarAt = item.StarAt.ToShortDateString(),
+                            EndAt = item.EndAt.ToShortDateString()
+                        });
+                    }
+                    listToReturn.Add(new ActivitiesbyStatusDto()
+                    {
+                        Status = status,
+                        TotalActivities = activities.Count,
+                        Activities = statusActivities
+                    });
+                }
+
+                return listToReturn;
             }
         }
     }

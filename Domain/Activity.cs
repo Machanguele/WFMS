@@ -6,7 +6,9 @@ namespace Domain
     {
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime StarAt { get; set; }
+        public DateTime ExpectedStarAt { get; set; }
+        public DateTime ExpectedEndAt { get; set; }
+        public DateTime StarAt { get; set; } 
         public DateTime EndAt { get; set; }
         public virtual AppUser CreatedBy { get; set; }
         public virtual AppUser AllocatedTo { get; set; }

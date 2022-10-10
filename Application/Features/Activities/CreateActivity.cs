@@ -21,6 +21,8 @@ namespace Application.Features.Activities
             public string Description { get; set; }
             public int ActivityTypeId { get; set; }
             public int ComponentId { get; set; }
+            public DateTime ExpectedStarAt { get; set; }
+            public DateTime ExpectedEndAt { get; set; }
         }
 
         public class CreateActivityCommandValidator : AbstractValidator<CreateActivityCommand>
@@ -30,6 +32,8 @@ namespace Application.Features.Activities
                 RuleFor(x => x.Name).NotEmpty();
                 RuleFor(x => x.Description).NotEmpty();
                 RuleFor(x => x.ComponentId).NotEmpty();
+                RuleFor(x => x.ExpectedEndAt).NotEmpty();
+                RuleFor(x => x.ExpectedStarAt).NotEmpty();
             }
         }
 
@@ -53,11 +57,26 @@ namespace Application.Features.Activities
                         (WebExceptionStatus) HttpStatusCode.NotFound);
                 var component = await _context.Components.FirstOrDefaultAsync(x => x.Id == request.ComponentId);
                 if(component == null)
-                    throw new WebException("Status not found", 
+                    throw new WebException("Component not found", 
                         (WebExceptionStatus) HttpStatusCode.NotFound);
                 
                 var activityType = await _context.ActivityTypes.FirstOrDefaultAsync(x => x.Id == request.ActivityTypeId);
 
+                if (request.ExpectedEndAt < request.ExpectedStarAt)
+                {
+                    throw new WebException("A data esperada de termino deve ser maior ou igual que a data esperada de inicio", 
+                        (WebExceptionStatus) HttpStatusCode.NotFound);
+                }
+                if (request.ExpectedStarAt < component.ExpectedStartDate || request.ExpectedStarAt > component.ExpectedEndDate)
+                {
+                    throw new WebException("A data esperada nao deve estar fora do escopo do componente", 
+                        (WebExceptionStatus) HttpStatusCode.NotFound);
+                }
+                if (request.ExpectedEndAt  < component.ExpectedStartDate || request.ExpectedEndAt >component.ExpectedEndDate)
+                {
+                    throw new WebException("A data esperada nao deve estar fora do escopo do componente", 
+                        (WebExceptionStatus) HttpStatusCode.NotFound);
+                }
 
                 var activity = new Activity()
                 {
@@ -67,12 +86,14 @@ namespace Application.Features.Activities
                     Component = component,
                     CreatedBy = await _userManager.Users.FirstOrDefaultAsync(x =>
                         x.Email == _userAccessor.GetCurrentUserEmail(), cancellationToken: cancellationToken),
-                    Type = activityType
+                    Type = activityType,
+                    ExpectedStarAt = request.ExpectedStarAt,
+                    ExpectedEndAt = request.ExpectedEndAt
                 };
 
                 await _context.AddAsync(activity);
                 if (await _context.SaveChangesAsync(cancellationToken) > 0) return activity;
-                throw  new WebException("Fail to Login",
+                throw  new WebException("Fail tto save activity",
                     (WebExceptionStatus) HttpStatusCode.BadRequest);
             }
         }

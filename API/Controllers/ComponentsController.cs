@@ -17,7 +17,7 @@ namespace API.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<Component>>> GetComponents(LisAllComponents.ListAllComponentsQuery listAllComponentsQuery)
+        public async Task<ActionResult<List<ComponentDto>>> GetComponents([FromQuery]LisAllComponents.ListAllComponentsQuery listAllComponentsQuery)
         {
             return await Mediator.Send(listAllComponentsQuery);
         }

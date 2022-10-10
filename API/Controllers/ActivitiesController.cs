@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Dtos;
 using Application.Features.Activities;
-using Application.Features.Users.Commands.Handlers;
 using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +18,23 @@ namespace API.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Activity>>> GEtActivitiesByComponent(int Id)
+        public async Task<ActionResult<List<ActivitiesbyStatusDto>>> GetActivitiesByComponent(int Id)
         {
             
             return await Mediator.Send(new ListActivitiesByComponent.ListActivitiesByComponentQuery(Id));
         } 
+        
+        [Consumes("multipart/form-data")]
+        [HttpPost("addFile")]
+        public async Task<ActionResult<string>> AddACtivityFile( [FromForm]IFormFile file, [FromForm]string activityId)
+        {
+            var compId = Int32.Parse(activityId);
+            
+
+            return null;
+            //return await Mediator.Send(command);
+        } 
+
         
         [Consumes("multipart/form-data")]
         [HttpPost("loudFile")]

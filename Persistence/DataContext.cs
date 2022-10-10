@@ -27,6 +27,7 @@ namespace Persistence
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<Component> Components { get; set; }
         public DbSet<SetUp> SetUps { get; set; }
+        public DbSet<Document> Documents { get; set; }
         
     }
 }
