@@ -51,9 +51,11 @@ namespace Application.Features.Activities
                             Id = item.Id,
                             Status = item.Status,
                             AllocatedTo = item.AllocatedTo?.FullName,
-                            CreatedAt = item.CreatedAt.ToShortDateString(),
-                            StarAt = item.StarAt.ToShortDateString(),
-                            EndAt = item.EndAt.ToShortDateString()
+                            CreatedAt = item.CreatedAt.ToString("yyyy-MM-dd"),
+                            StarAt = item.StarAt.ToString("yyyy-MM-dd"),
+                            EndAt = item.EndAt.ToString("yyyy-MM-dd"),
+                            ExpectedStarDate = item.ExpectedStarAt.ToString("yyyy-MM-dd"),
+                            ExpectedEndDate = item.ExpectedEndAt.ToString("yyyy-MM-dd"),
                         });
                     }
                     listToReturn.Add(new ActivitiesbyStatusDto()

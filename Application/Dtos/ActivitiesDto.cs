@@ -10,6 +10,8 @@ namespace Application.Dtos
         public string CreatedAt { get; set; }
         public string StarAt { get; set; }
         public string EndAt { get; set; }
+        public string ExpectedStarDate { get; set; }
+        public string ExpectedEndDate { get; set; }
         public string  CreatedBy { get; set; }
         public string  AllocatedTo { get; set; }
         public virtual ActivityStatus Status { get; set; }
