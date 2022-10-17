@@ -52,8 +52,8 @@ namespace Application.Features.Activities
                             Status = item.Status,
                             AllocatedTo = item.AllocatedTo?.FullName,
                             CreatedAt = item.CreatedAt.ToString("yyyy-MM-dd"),
-                            StarAt = item.StarAt.ToString("yyyy-MM-dd"),
-                            EndAt = item.EndAt.ToString("yyyy-MM-dd"),
+                            StarAt = item.StarAt.Year != 0001? item.StarAt.ToString("yyyy-MM-dd") : "-",
+                            EndAt = item.EndAt.Year != 00001? item.EndAt.ToString("yyyy-MM-dd") :"-",
                             ExpectedStarDate = item.ExpectedStarAt.ToString("yyyy-MM-dd"),
                             ExpectedEndDate = item.ExpectedEndAt.ToString("yyyy-MM-dd"),
                         });
