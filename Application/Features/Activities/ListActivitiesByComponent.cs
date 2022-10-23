@@ -33,8 +33,9 @@ namespace Application.Features.Activities
                 var activities =  await Context.Activities
                     .Include(x=>x.Component)
                     .Include(x=>x.Status)
+                    .Include(x=>x.AllocatedTo)
                     .Where(x=>x.Component.Id== request.ComponentId)
-                    .ToListAsync();
+                    .ToListAsync(cancellationToken: cancellationToken);
 
                 var statuses = await Context.ActivityStatuses.ToListAsync(cancellationToken: cancellationToken);
                 var listToReturn = new List<ActivitiesbyStatusDto>();

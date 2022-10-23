@@ -24,6 +24,18 @@ namespace API.Controllers
             return await Mediator.Send(new ListActivitiesByComponent.ListActivitiesByComponentQuery(Id));
         } 
         
+        [HttpPut("status")]
+        public async Task<ActionResult<Activity>>UpdateStatusActivity(UpdateActivityStatus.UpdateActivityStatusCommand command)
+        {
+            return await Mediator.Send(command);
+        } 
+        
+        [HttpPut("allocate")]
+        public async Task<ActionResult<Activity>>AllocateUserActivity(AllocateUser.AllocateUserCommand command)
+        {
+            return await Mediator.Send(command);
+        } 
+        
         [Consumes("multipart/form-data")]
         [HttpPost("addFile")]
         public async Task<ActionResult<string>> AddACtivityFile( [FromForm]IFormFile file, [FromForm]string activityId)
