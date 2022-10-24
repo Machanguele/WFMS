@@ -17,4 +17,5 @@ namespace Application.Dtos
         public virtual ActivityStatus Status { get; set; }
         public virtual ActivityType Type { get; set; }
     }
+    
 }

@@ -17,6 +17,13 @@ namespace API.Controllers
             return await Mediator.Send(command);
         }
         
+        [HttpGet("gantt/{id}")]
+        public async Task<ActionResult<GanttActivitiesDto>> GetActivitiesByComponentGantt(int Id)
+        {
+            
+            return await Mediator.Send(new ListActivitiesByGantt.ListActivitiesByGanttQuery(Id));
+        } 
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<List<ActivitiesbyStatusDto>>> GetActivitiesByComponent(int Id)
         {

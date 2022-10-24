@@ -45,7 +45,7 @@ namespace Application.Features.Activities
                     var statusActivities = new List<ActivitiesDto>();
                     foreach (var item in auxActivities)
                     {
-                        statusActivities.Add(new ActivitiesDto()
+                        statusActivities.Add(new ActivitiesDto
                         {
                             Description = item.Description,
                             Name = item.Name,
