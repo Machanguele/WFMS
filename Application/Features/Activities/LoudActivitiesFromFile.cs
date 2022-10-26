@@ -111,9 +111,10 @@ namespace Application.Features.Activities
                             Component = component,
                             CreatedBy = createdBy,
                             ExpectedEndAt = item.ExpectedEndAt,
-                            ExpectedStarAt = item.ExpectedStarAt
+                            ExpectedStarAt = item.ExpectedStarAt,
+                            CreatedAt = DateTime.Now
                         };
-                        await _context.AddAsync(activity);
+                        await _context.AddAsync(activity, cancellationToken);
                     }
                 }
                 
