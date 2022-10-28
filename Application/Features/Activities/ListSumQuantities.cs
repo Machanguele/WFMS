@@ -39,7 +39,7 @@ namespace Application.Features.Activities
                         color = "#3498DB";
                     if (item.Name == "Em Revisão")
                         color = "#2ECC71";
-                    if (item.Name == "Concluido")
+                    if (item.Name == "Concluídas")
                         color = "#27AE60";
                     
                     listToReturn.Add(new SumActivitiesDto

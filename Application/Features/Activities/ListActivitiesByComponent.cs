@@ -51,7 +51,7 @@ namespace Application.Features.Activities
                             Name = item.Name,
                             Id = item.Id,
                             Status = item.Status,
-                            AllocatedTo = item.AllocatedTo?.FullName,
+                            AllocatedTo = item.AllocatedTo != null? item.AllocatedTo.FullName: "NA",
                             CreatedAt = item.CreatedAt.ToString("yyyy-MM-dd"),
                             StarAt = item.StarAt.Year != 0001? item.StarAt.ToString("yyyy-MM-dd") : "-",
                             EndAt = item.EndAt.Year != 00001? item.EndAt.ToString("yyyy-MM-dd") :"-",

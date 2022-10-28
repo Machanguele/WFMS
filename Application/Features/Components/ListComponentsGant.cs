@@ -75,7 +75,7 @@ namespace Application.Features.Components
                                  ActualEndDate = DateHelper(component.ActualEndDate),
                                  ExpectedEndDate = DateHelper(component.ExpectedEndDate),
                                  ExpectedStartDate = DateHelper(component.ExpectedStartDate),
-                                 FinishedActivities = activities.Count >0?  activities.Count(x => x.Status.Description == "Concluido"): 0
+                                 FinishedActivities = activities.Count >0?  activities.Count(x => x.Status.Description == "Concluídas"): 0
                              }
                          });
                     }

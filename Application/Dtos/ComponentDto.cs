@@ -18,6 +18,7 @@ namespace Application.Dtos
         public virtual AppUser CreatedBy { get; set; }
         public virtual ComponentStatus ComponentStatus { get; set; }
         public virtual Department Department { get; set; }
+        public bool Finished { get; set; }
         public List<Activity> Activities { get; set; }
     }
 }
