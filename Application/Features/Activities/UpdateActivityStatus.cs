@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain;
@@ -39,7 +40,9 @@ namespace Application.Features.Activities
                 var status = await _context.ActivityStatuses
                     .FirstOrDefaultAsync(x => x.Name.ToLower() == request.ActivityStatus.ToLower(), cancellationToken: cancellationToken);
 
-                var activity = await _context.Activities.FirstAsync(x => x.Id == request.ActivityId, cancellationToken: cancellationToken);
+                var activity = await _context.Activities
+                    .Include(x=>x.Component)
+                    .FirstAsync(x => x.Id == request.ActivityId, cancellationToken: cancellationToken);
 
                 if (activity == null || status == null)
                 {
@@ -50,6 +53,15 @@ namespace Application.Features.Activities
                 activity.Status = status;
                 _context.Entry(activity).State = EntityState.Modified;
 
+                var activities = await _context.Activities
+                    .Include(x => x.Status)
+                    .Include(x => x.Component)
+                    .Where(x => x.Status.Name != "Concluídas" && x.Component.Id == activity.Component.Id)
+                    .FirstOrDefaultAsync(cancellationToken);
+                if(activities != null)
+                    activities.Component.Finished = true;
+                if (activities != null) _context.Entry((object) activities.Component).State = EntityState.Modified;
+                
                 var result = await _context.SaveChangesAsync(cancellationToken);
                 if (result > 0)
                     return activity;
