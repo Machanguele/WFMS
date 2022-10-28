@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Dtos;
+using Application.Features.Components;
 using Application.Features.Components.Commands.RequestModel;
 using Application.Features.Components.Queries.RequestModel;
 using Domain;
@@ -20,6 +21,12 @@ namespace API.Controllers
         public async Task<ActionResult<List<ComponentDto>>> GetComponents([FromQuery]LisAllComponents.ListAllComponentsQuery listAllComponentsQuery)
         {
             return await Mediator.Send(listAllComponentsQuery);
+        } 
+        
+        [HttpGet("gantt")]
+        public async Task<ActionResult<List<GanttActivitiesDto>>> GetComponentsGantt()
+        {
+            return await Mediator.Send(new ListComponentsGant.ListComponentsGantQuery());
         }
         
          [HttpGet("{id}")]

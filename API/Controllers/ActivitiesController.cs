@@ -31,6 +31,13 @@ namespace API.Controllers
             return await Mediator.Send(new ListActivitiesByComponent.ListActivitiesByComponentQuery(Id));
         } 
         
+        [HttpGet("count")]
+        public async Task<ActionResult<List<SumActivitiesDto>>> GetSumActivities()
+        {
+            
+            return await Mediator.Send(new ListSumQuantities.ListSumQuantitiesQuery());
+        } 
+        
         [HttpPut("status")]
         public async Task<ActionResult<Activity>>UpdateStatusActivity(UpdateActivityStatus.UpdateActivityStatusCommand command)
         {

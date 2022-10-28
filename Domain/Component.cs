@@ -13,6 +13,7 @@ namespace Domain
         public DateTime ExpectedEndDate { get; set; }
         public DateTime StartedDate { get; set; }
         public DateTime ActualEndDate { get; set; }
+        public bool Finished { get; set; }
         public virtual AppUser CreatedBy { get; set; }
         public virtual ComponentStatus ComponentStatus { get; set; }
         public virtual Department Department { get; set; }

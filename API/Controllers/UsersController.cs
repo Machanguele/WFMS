@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.Dtos;
+using Application.Features.Users;
 using Application.Features.Users.Commands.RequestModels;
-using Domain;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -16,5 +16,12 @@ namespace API.Controllers
         {
             return await Mediator.Send(userCommand); 
         }
+        
+        [HttpGet]
+        public async Task<ActionResult<List<UserDto>>> ListAllUsers()
+        {
+            
+            return await Mediator.Send(new ListUsers.ListUsersQuery());
+        } 
     }
 }
