@@ -18,5 +18,9 @@
   {
     "ShortName": "DRA",
     "Description": "Departamento do Registo Académico"
+  },
+  {
+    "ShortName": "DCG",
+    "Description": "Departamento de cadeiras gerais"
   }
 ]

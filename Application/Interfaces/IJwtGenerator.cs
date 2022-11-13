@@ -7,7 +7,7 @@ namespace Application.Interfaces
 {
     public interface IJwtGenerator
     {
-       Task<TokenAdapter> GenerateToken(AppUser user, List<ApplicationPermission> applicationPermissions,bool updateExistingToken);
+       Task<TokenAdapter> GenerateToken(AppUser user, List<ApplicationRole> applicationPermissions,bool updateExistingToken);
        Task<bool> VerifyTokenValidity(TokenRequest tokenRequest, RefreshToken refreshToken);
     }
 }

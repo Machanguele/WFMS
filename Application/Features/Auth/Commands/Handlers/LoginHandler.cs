@@ -41,7 +41,7 @@ namespace Application.Features.Auth.Commands.Handlers
             var user = await _userManager.Users
                 .Include(x=>x.ApplicationRole)
                 .Where(x => x.Email == request.Email)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken: cancellationToken);
                 
                 
             if (user == null || user.Archived)
@@ -56,10 +56,7 @@ namespace Application.Features.Auth.Commands.Handlers
                 user.LoggedIn = true;
                 await _context.SaveChangesAsync(cancellationToken);
 
-                var permissions = await _context.ApplicationRolePermissions
-                    .Include(x => x.ApplicationPermission)
-                    .Include(x => x.ApplicationRole)
-                    .Select(x => x.ApplicationPermission)
+                var permissions = await _context.ApplicationRoles
                     .ToListAsync(cancellationToken);
                 var authInfo = await _jwtGenerator.GenerateToken(user, permissions,false);
                          
@@ -79,13 +76,7 @@ namespace Application.Features.Auth.Commands.Handlers
                     RefreshToken = authInfo.RefreshToken.Token,
                     Username = user.UserName,
                     FullName = user.FullName,
-                    ApplicationRoleDto = new ApplicationRoleDto
-                    {
-                        Description = user.ApplicationRole.Description,
-                        Name = user.ApplicationRole.Name,
-                        Id = user.ApplicationRole.Id,
-                        ApplicationPermissions = permissions
-                    }
+                    Role = user.ApplicationRole?.Name
                 };
             }
             throw  new WebException(_localizerHelper.GetString("Login Failed"),

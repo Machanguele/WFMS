@@ -1,11 +1,20 @@
 ﻿[
   {
-    "Name": "SystemAdministrator",
-    "Description": "System Administrator"
+    "Name": "Director",
+    "Description": "Director"
   },
   {
-    "Name": "OperationsManager",
-    "Description": "Operations Manager"
+    "Name": "TI de Suporte",
+    "Description": "TI de Suporte"
+  },
+  {
+    "Name": "Gestor de actividades ",
+    "Description": "Gestor de actividades "
+  },
+  {
+    "Name": "Operador Transacional",
+    "Description": "Operador Transacional"
   }
+  
   
 ]

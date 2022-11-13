@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Dtos;
@@ -26,18 +27,19 @@ namespace Application.Features.Users
             }
             public async Task<List<UserDto>> Handle(ListUsersQuery request, CancellationToken cancellationToken)
             {
-                var users = await _context.AppUsers.ToListAsync(cancellationToken);
-                var listToReturn = new List<UserDto>();
-                foreach (var user in users)
-                {
-                    listToReturn.Add(new UserDto
-                    {
-                        FullName = user.FullName,
-                        Email = user.Email
-                    });
-                }
+                var users = await _context.AppUsers
+                    .Include(x=>x.ApplicationRole)
+                    .Include(x=>x.Department)
+                    .ToListAsync(cancellationToken);
 
-                return listToReturn;
+                return users.Select(user => new UserDto 
+                    {FullName = user.FullName, 
+                    Email = user.Email, 
+                    Archived = user.Archived,
+                    Username = user.UserName,
+                    Role = user.ApplicationRole?.Description, 
+                    Department = user.Department?.ShortName})
+                    .ToList();
             }
         }
     }

@@ -49,7 +49,7 @@ namespace Application.Features.Auth.Commands.Handlers
                 (WebExceptionStatus) HttpStatusCode.BadRequest);
                 
                 
-            var refreshedToken =  await _jwtGenerator.GenerateToken(storedToken.User, new List<ApplicationPermission>(),true);
+            var refreshedToken =  await _jwtGenerator.GenerateToken(storedToken.User, new List<ApplicationRole>(),true);
             return new LoginDto
             {
                 Token = refreshedToken.Token,

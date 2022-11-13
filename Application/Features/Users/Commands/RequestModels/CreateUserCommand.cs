@@ -8,6 +8,6 @@ namespace Application.Features.Users.Commands.RequestModels
         public string Email { get; set; }
         public string Fullname { get; set; }
         public string Role { get; set; }
-        public int DepartmentId { get; set; }
+        public string Department { get; set; }
     }
 }

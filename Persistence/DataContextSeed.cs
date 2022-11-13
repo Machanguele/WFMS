@@ -54,19 +54,6 @@ namespace Persistence
                     foreach (var role in roles)
                     {
                         await context.AddAsync(role);
-                        if (role.Name == "SystemAdministrator")
-                        {
-                            var permissions = await context.ApplicationPermissions.ToListAsync();
-                            foreach (var permission in permissions)
-                            {
-                                var rolePermission = new ApplicationRolePermission()
-                                {
-                                    ApplicationPermission = permission,
-                                    ApplicationRole = role
-                                };
-                                await context.AddAsync(rolePermission);
-                            }
-                        }
                     }
                     await context.SaveChangesAsync();
                 }
@@ -84,7 +71,7 @@ namespace Persistence
                             Email = user.Email,
                             FullName = user.FullName,
                             UserName = user.Email,
-                            ApplicationRole = await context.ApplicationRoles.FirstOrDefaultAsync(x=> x.Name=="SystemAdministrator" )
+                            ApplicationRole = await context.ApplicationRoles.FirstOrDefaultAsync(x=> x.Name=="Director" )
                         }, "Pa$$w0rd");
                     }
 

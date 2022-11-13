@@ -29,9 +29,10 @@ namespace Application.Features.Users.Commands.Handlers
             if (role == null)
                 throw new WebException("Role not found", (WebExceptionStatus) HttpStatusCode.NotFound);
  
-            var department = await _context.Departments.FirstOrDefaultAsync(x => x.Id == request.DepartmentId);
-            if (role == null)
-                throw new WebException("Role not found", (WebExceptionStatus) HttpStatusCode.NotFound);
+            var department = await _context.Departments
+                .FirstOrDefaultAsync(x => x.ShortName == request.Department, cancellationToken: cancellationToken);
+            if (department == null)
+                throw new WebException("Department not found", (WebExceptionStatus) HttpStatusCode.NotFound);
 
             var user = new AppUser
             {
@@ -39,7 +40,8 @@ namespace Application.Features.Users.Commands.Handlers
                 FullName = request.Fullname,
                 EmailConfirmed = true,
                 ApplicationRole = role,
-                UserName = request.Email
+                UserName = request.Email,
+                Department = department
             };
 
             var result = await _userManager.CreateAsync(user, "Pa$$w0rd");
@@ -47,22 +49,15 @@ namespace Application.Features.Users.Commands.Handlers
                 throw new WebException("User not created", (WebExceptionStatus) HttpStatusCode.BadRequest);
             return new UserDto
             {
-                Department = user.Department,
+                Department = user.Department?.ShortName,
                 Email = user.FullName,
                 Username = user.UserName,
                 FullName = user.FullName,
-                ApplicationRoleDto = new ApplicationRoleDto
+                ApplicationRole = new ApplicationRole
                 {
                     Description = user.ApplicationRole.Description,
                     Name = user.ApplicationRole.Name,
                     Id = user.ApplicationRole.Id,
-                    ApplicationPermissions = await _context.ApplicationRolePermissions
-                        .Include(x=>x.ApplicationRole)
-                        .Include(x=>x.ApplicationPermission)
-                        .Where(x=>x.ApplicationRole.Id == user.ApplicationRole.Id)
-                        .Select(x=>x.ApplicationPermission)
-                        .ToListAsync(cancellationToken)
-                    
                 }
             };
         }

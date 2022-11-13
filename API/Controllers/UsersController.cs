@@ -17,10 +17,15 @@ namespace API.Controllers
             return await Mediator.Send(userCommand); 
         }
         
+        [HttpPut("archive")]
+        public async Task<ActionResult<UserDto>> ArchiveUser(ArchiveUserCommand archive)
+        {
+            return await Mediator.Send(archive); 
+        }
+        
         [HttpGet]
         public async Task<ActionResult<List<UserDto>>> ListAllUsers()
         {
-            
             return await Mediator.Send(new ListUsers.ListUsersQuery());
         } 
     }

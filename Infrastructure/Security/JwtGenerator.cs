@@ -35,7 +35,7 @@ namespace Infrastructure
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:TokenSecret"]));
 
         }
-        public async Task<TokenAdapter>  GenerateToken(AppUser user, List<ApplicationPermission> applicationPermissions ,bool updateExistingToken)
+        public async Task<TokenAdapter>  GenerateToken(AppUser user, List<ApplicationRole> applicationPermissions ,bool updateExistingToken)
         {
             if (user == null) throw new WebException("User is Empty", (WebExceptionStatus) HttpStatusCode.BadRequest);
             var userExists = await _context.Users

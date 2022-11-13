@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Dtos;
+using Application.Interfaces;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -15,19 +17,29 @@ namespace Application.Features.Components.Queries.RequestModel
     {
         public class ListAllComponentsQuery : IRequest<List<ComponentDto>>
         {
+            public string Role { get; set; }
+            public string Email { get; set; }
             
         }
         public class ListAllComponentsQueryHandler : IRequestHandler<ListAllComponentsQuery, List<ComponentDto>>
         {
             private readonly DataContext _context;
+            private readonly UserManager<AppUser> _userManager;
+            private readonly IUserAccessor _userAccessor;
 
-            public ListAllComponentsQueryHandler(DataContext context)
+            public ListAllComponentsQueryHandler(DataContext context, UserManager<AppUser> userManager, IUserAccessor userAccessor)
             {
                 _context = context;
+                _userManager = userManager;
+                _userAccessor = userAccessor;
             }
             public async Task<List<ComponentDto>> Handle(ListAllComponentsQuery request, CancellationToken cancellationToken)
             {
                 var listToreturn = new List<ComponentDto>();
+
+                //var loggedUserEmail =  _userAccessor.GetCurrentUserEmail();
+                //var loggedUser = await _context.Users.FirstOrDefaultAsync(x=>x.Email.ToLower() == loggedUserEmail.ToLower(), cancellationToken: cancellationToken);
+                
                 var components = await _context.Components
                     .Include(x => x.Department)
                     .Include(x => x.ComponentStatus)
@@ -59,7 +71,7 @@ namespace Application.Features.Components.Queries.RequestModel
                        FinishedActivities = activities.Count >0?  activities.Count(x => x.Status.Description == "Concluídas"): 0
                     });
                 }
-
+                
                 return listToreturn;
             }
 
