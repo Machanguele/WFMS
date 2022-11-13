@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Application.Dtos;
 using Application.Features.Components;
+using Application.Features.Components.Commands.Handlers;
 using Application.Features.Components.Commands.RequestModel;
 using Application.Features.Components.Queries.RequestModel;
 using Domain;
@@ -42,6 +43,12 @@ namespace API.Controllers
         {
             
             return await Mediator.Send(allComponentsGroupByDptQuery);
+        }
+        
+        [HttpPut("finish")]
+        public async Task<ActionResult<Component>> FinishComponents(CloseComponent.CloseComponentCommand command)
+        {
+            return await Mediator.Send(command);
         }
         
         

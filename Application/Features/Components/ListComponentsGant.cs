@@ -27,7 +27,9 @@ namespace Application.Features.Components
             }
             public  async Task<List<GanttActivitiesDto>> Handle(ListComponentsGantQuery request, CancellationToken cancellationToken)
             {
-                var components = await _context.Components.ToListAsync(cancellationToken);
+                var components = await _context.Components
+                    .OrderBy(x=>x.CreatedAt)
+                    .ToListAsync(cancellationToken);
                 
                 var listToReturn = new List<GanttActivitiesDto>();
                 foreach (var component in components)

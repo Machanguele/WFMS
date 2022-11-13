@@ -30,6 +30,7 @@ namespace Application.Features.Users
                 var users = await _context.AppUsers
                     .Include(x=>x.ApplicationRole)
                     .Include(x=>x.Department)
+                    .OrderBy(x=>x.Email)
                     .ToListAsync(cancellationToken);
 
                 return users.Select(user => new UserDto 

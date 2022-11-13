@@ -53,7 +53,7 @@ namespace Application.Features.Activities
                 activity.Status = status;
                 _context.Entry(activity).State = EntityState.Modified;
 
-                var activities = await _context.Activities
+                /*var activities = await _context.Activities
                     .Include(x => x.Status)
                     .Include(x => x.Component)
                     .Where(x => x.Status.Name != "Concluídas" && x.Component.Id == activity.Component.Id)
@@ -61,9 +61,11 @@ namespace Application.Features.Activities
                 if (activities == 0)
                     activity.Component.Finished = true;
                 else
-                    activity.Component.Finished = false;
+                    activity.Component.Finished = false;*/
                 
+                /*
                 _context.Entry(activity.Component).State = EntityState.Modified;
+                */
                 
                 var result = await _context.SaveChangesAsync(cancellationToken);
                 if (result > 0)

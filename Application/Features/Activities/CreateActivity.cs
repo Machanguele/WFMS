@@ -51,18 +51,18 @@ namespace Application.Features.Activities
             }
             public async Task<Activity> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
             {
-                var status = await _context.ActivityStatuses.FirstOrDefaultAsync(x => x.Name == "Por fazer");
+                var status = await _context.ActivityStatuses.FirstOrDefaultAsync(x => x.Name == "Por fazer", cancellationToken: cancellationToken);
                 if(status == null)
                     throw new WebException("Status not found", 
                         (WebExceptionStatus) HttpStatusCode.NotFound);
-                var component = await _context.Components.FirstOrDefaultAsync(x => x.Id == request.ComponentId);
+                var component = await _context.Components.FirstOrDefaultAsync(x => x.Id == request.ComponentId, cancellationToken: cancellationToken);
                 if(component == null)
                     throw new WebException("Component not found", 
                         (WebExceptionStatus) HttpStatusCode.NotFound);
                 
-                var activityType = await _context.ActivityTypes.FirstOrDefaultAsync(x => x.Id == request.ActivityTypeId);
+                var activityType = await _context.ActivityTypes.FirstOrDefaultAsync(x => x.Id == request.ActivityTypeId, cancellationToken: cancellationToken);
 
-                if (request.ExpectedEndAt < request.ExpectedStarAt)
+                /*if (request.ExpectedEndAt < request.ExpectedStarAt)
                 {
                     throw new WebException("A data esperada de termino deve ser maior ou igual que a data esperada de inicio", 
                         (WebExceptionStatus) HttpStatusCode.NotFound);
@@ -71,12 +71,12 @@ namespace Application.Features.Activities
                 {
                     throw new WebException("A data esperada nao deve estar fora do escopo do componente", 
                         (WebExceptionStatus) HttpStatusCode.NotFound);
-                }
-                if (request.ExpectedEndAt  < component.ExpectedStartDate || request.ExpectedEndAt >component.ExpectedEndDate)
+                }*/
+                /*if (request.ExpectedEndAt  < component.ExpectedStartDate || request.ExpectedEndAt >component.ExpectedEndDate)
                 {
                     throw new WebException("A data esperada nao deve estar fora do escopo do componente", 
                         (WebExceptionStatus) HttpStatusCode.NotFound);
-                }
+                }*/
 
                 var activity = new Activity()
                 {

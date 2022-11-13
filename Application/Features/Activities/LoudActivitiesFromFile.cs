@@ -88,7 +88,7 @@ namespace Application.Features.Activities
                             throw new WebException("Status not found", 
                                 (WebExceptionStatus) HttpStatusCode.NotFound);
                 
-                        if (item.ExpectedEndAt < item.ExpectedStarAt)
+                        /*if (item.ExpectedEndAt < item.ExpectedStarAt)
                         {
                             throw new WebException("A data esperada de termino deve ser maior ou igual que a data esperada de inicio", 
                                 (WebExceptionStatus) HttpStatusCode.NotFound);
@@ -102,7 +102,7 @@ namespace Application.Features.Activities
                         {
                             throw new WebException("A data esperada nao deve estar fora do escopo do componente", 
                                 (WebExceptionStatus) HttpStatusCode.NotFound);
-                        }
+                        }*/
                         var activity = new Activity()
                         {
                             Name = item.Name,
